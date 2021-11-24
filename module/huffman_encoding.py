@@ -21,8 +21,19 @@ class Huffman:
                 # if odd -> declare first item a leftover
                 left_over = group[1][0]
                 del group[1][0]
-            print(group)
+
+            # pair items in groups
+            l = { group[0] : list(self.chunks(group[1], 2)) }
+            # print(group)
+            print(l)
+            print("\n")
+
                 
+    def chunks(self, lst, n):
+        """Yield successive n-sized chunks from lst."""
+        for i in range(0, len(lst), n):
+            yield lst[i:i + n] 
+        
     def group_frequencies(self, data: dict) -> dict:
         groups = {}
         for char, val in data.items():
