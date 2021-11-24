@@ -23,11 +23,14 @@ class Huffman:
                 del group[1][0]
 
             # pair items in groups
-            l = { group[0] : list(self.chunks(group[1], 2)) }
+            leaf_node = { group[0] : list(self.chunks(group[1], 2)) }
             # print(group)
-            print(l)
+            self.chain_leaf_nodes(leaf_node)
+            print(leaf_node)
             print("\n")
 
+    def chain_leaf_nodes(self, leaf_node: dict) -> None:
+        pass
                 
     def chunks(self, lst, n):
         """Yield successive n-sized chunks from lst."""
