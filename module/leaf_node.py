@@ -5,16 +5,22 @@ class LeafNode:
     child1: object = None
     code: int = None
     content: any = None
+    prob: int = None
+    is_numeric = False
 
-    def __init__(self, child0: object, child1: object, code: int, content: any):
-        self.child0 = child0
-        self.child1 = child1
-        self.code = code
+    def __str__ (self):
+        return "[content: {}, prob: {}]".format(self.content, self.prob)
+
+    def __init__(self, content: any, prob: int, is_numeric: bool):
         self.content = content
-
-    def is_numeric(self) -> bool:
-        return str.isnumeric(self.content)
+        self.prob = prob
 
     def set_parent(self, parent: object) -> None:
         self.parent = parent
 
+    def set_children(self, child0, child1):
+        self.child0 = child0
+        self.child1 = child1
+
+    def set_code(self, code: int):
+        self.code = code
