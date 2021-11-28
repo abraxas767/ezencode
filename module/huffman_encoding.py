@@ -1,5 +1,7 @@
 from collections import OrderedDict
 from leaf_node import LeafNode
+import sys
+from queue import Queue 
 
 def pprint(d):
     if type(d) == dict:
@@ -12,105 +14,56 @@ def pprint(d):
 
 class Huffman:
 
-    EXAMPLE_STRING: str = "hello world1"
+    EXAMPLE_STRING: str = "helo world1"
+
+    leafs = [] 
 
     def __init__(self):
 
         freq = self.map_frequencies(self.EXAMPLE_STRING)
         sorted_freq = self.sort_frequencies(freq) 
-        groups = self.group_frequencies(sorted_freq)
-        paired_freq = self.pair_frequencies(groups)
-        nodes = self.generate_nodes(sorted_freq, paired_freq)
-        tree = self.create_huffman_tree(paired_freq, nodes)
-        self.create_prefix_table(tree)
+        self.pair_frequencies(sorted_freq)
+        pprint(self.leafs)
 
     def create_prefix_table(self, huffman_tree):
-        print(huffman_tree[0].is_numeric)
+        self.add_to_prefix_table(huffman_tree)
 
-
-    def generate_nodes(self, sorted_freq, paired_freq):
-        nodes = {}
-        for key, val in sorted_freq.items():
-            leaf = LeafNode(key, val, False)
-            l = {key : leaf}
-            nodes.update(l)
-        if "xx" in paired_freq:
-            nodes.update({ 0 : LeafNode("xx", 0, False)})
-        pprint(nodes)
-        print("\n")
-        pprint(sorted_freq)
-        return nodes
-
-    def create_huffman_tree(self, paired_freq, nodes):
-        huffman_tree = [] 
-        for v in paired_freq.items():
-            for pair in v[1]:
-                first_leaf = nodes[pair[0]]
-                sec_leaf = nodes[pair[1]]
-                first_leaf.set_code(0)
-                sec_leaf.set_code(1)
-
-                prob = first_leaf.prob + sec_leaf.prob
-                n = LeafNode(first_leaf.content + sec_leaf.content, prob, True)
-                n.set_children(first_leaf, sec_leaf)
-
-                first_leaf.set_parent(n)
-                sec_leaf.set_parent(n)
-                huffman_tree.append(n)
-
-        while len(huffman_tree) > 1:
-            layer = []
-            count = 0
-            while count < len(huffman_tree) -1 :
-                first = huffman_tree[count]
-                sec = huffman_tree[count + 1]
-                prob = first.prob + sec.prob
-                l = LeafNode(first.content + sec.content, prob, True)
-                layer.append(l)
-                count += 2
-            if count == len(huffman_tree)-1:
-                layer.append(LeafNode(huffman_tree[count].content, huffman_tree[count].prob, True))
-            huffman_tree = layer
-        return huffman_tree
+    def add_to_prefix_table(self, node):
+        if not node.is_numeric:
+            print("adding node: ", node)
+        if node.child0 is not None and node.child1 is not None:
+            self.add_to_prefix_table(node.child0)
+            self.add_to_prefix_table(node.child1)
     
-
     def pair_frequencies(self, data: dict):
-        paired = {}
-        left_over = None
-        for group in data.items():
-            # check if there was a leftover from previous cycle
-            if left_over is not None:
-                # if there is a leftover -> attach it at the end of group array
-                group[1].append(left_over)
-                left_over = None
-            # check if group contains odd amount of items
-            if len(group[1]) % 2 != 0:                 
-                if group[0] == list(data)[-1]:
-                    # append filling leaf node
-                    group[1].append("xx")
-                else:
-                    # if odd -> declare first item a leftover
-                    left_over = group[1][0]
-                    del group[1][0]
-            # pair items in groups
-            leaf_node = { group[0] : list(self.chunks(group[1], 2)) }
-            paired.update(leaf_node)
-        return paired
+        if len(data) % 2 != 0:
+            fill_node = LeafNode("xx", 0, False)
+            self.leafs.append(fill_node)
+        for i in data.items():
+            leaf_node = LeafNode(i[0], i[1], False)
+            self.leafs.append(leaf_node)
+        self.gen_pairs(self.leafs)
 
-    def chunks(self, lst, n):
-        """Yield successive n-sized chunks from lst."""
-        for i in range(0, len(lst), n):
-            yield lst[i:i + n] 
-        
-    def group_frequencies(self, data: dict) -> dict:
-        groups = {}
-        for char, val in data.items():
-            if not val in groups:
-                groups[val] = [char]
-            else:
-                groups[val].append(char)
-        return groups
-
+    def gen_pairs(self, data):
+        pairs = []
+        while len(data) > 0:
+            l1 = data[-1]
+            del data[-1]
+            l2 = data[-1]
+            del data[-1]
+            pair = LeafNode(l1.content + l2.content, l1.prob + l2.prob, True)
+            pair.set_children(l1, l2)
+            l1.set_parent(pair)
+            l2.set_parent(pair)
+            if len(data) == 1:
+                pairs.append(data[0])
+                del data[0]
+            pairs.append(pair)
+        if len(pairs) == 1:
+            self.leafs = pairs
+            return 
+        self.gen_pairs(pairs)
+       
     def sort_frequencies(self, data: dict) -> dict:
         res = {k: v for k, v in sorted(data.items(), key=lambda item: item[1])}
         return res
