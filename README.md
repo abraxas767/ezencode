@@ -20,5 +20,18 @@ cd ./ezencode/module
 python3 index.py
 ```
 
+### Scope
+
+Momentan ist das Programm noch nicht sonderlich nützlich. Die eher lustig
+gemeinte Morse-Codierung außen vor gelassen, fehlen noch einige essentielle
+Funktionen, insbesondere bei der Huffman-Codierung. Die generierte Prefix
+Tabelle wird beispielsweise nicht an den fertig komprimierten Bitstring
+angefügt und geht bei Beenden des Programmes verloren. Daher kann bisher 
+nur in der gleichen Session encoded und decoded werden (was nicht viel bringt).
+
+Zur Veranschaulichung dass Komprimierungs- und Dekomprimierungslogik jedoch
+schon funktioniert kann ein von Ihnen gegebener Input komprimiert und gleich
+wieder dekomprimiert werden.
+
 ### Warum ist das hier meines Erachtens Clean Code?
 
