@@ -14,23 +14,34 @@ def pprint(d):
 
 class Huffman:
 
-    EXAMPLE_STRING: str = "helo world1"
+    EXAMPLE_STRING: str = "Lorem ipsum semi et dolor"
 
     leafs = [] 
+    prefix_table = {}
 
     def __init__(self):
 
         freq = self.map_frequencies(self.EXAMPLE_STRING)
         sorted_freq = self.sort_frequencies(freq) 
         self.pair_frequencies(sorted_freq)
-        pprint(self.leafs)
+        pprint(sorted_freq)
+        self.create_prefix_table()
+        pprint(self.prefix_table)
 
-    def create_prefix_table(self, huffman_tree):
-        self.add_to_prefix_table(huffman_tree)
+    def create_prefix_table(self):
+        self.add_to_prefix_table(self.leafs[0])
 
     def add_to_prefix_table(self, node):
+        #print(node)
         if not node.is_numeric:
-            print("adding node: ", node)
+            code = ""
+            code += str(node.code)
+            cursor = node
+            while cursor.parent is not None:
+                cursor = cursor.parent
+                if cursor.code is not None:
+                    code += str(cursor.code)
+            self.prefix_table[node.content] = code
         if node.child0 is not None and node.child1 is not None:
             self.add_to_prefix_table(node.child0)
             self.add_to_prefix_table(node.child1)
@@ -54,11 +65,16 @@ class Huffman:
             pair = LeafNode(l1.content + l2.content, l1.prob + l2.prob, True)
             pair.set_children(l1, l2)
             l1.set_parent(pair)
+            l1.set_code(0)
             l2.set_parent(pair)
+            l2.set_code(1)
+            #print("pair: ", l1, l2)
             if len(data) == 1:
                 pairs.append(data[0])
                 del data[0]
             pairs.append(pair)
+        
+        pairs.sort(key=lambda x: x.prob, reverse=True)
         if len(pairs) == 1:
             self.leafs = pairs
             return 
