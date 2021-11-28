@@ -37,6 +37,10 @@ wieder dekomprimiert werden.
 
 _Einhaltung von Struktur-Konventionen_
 
+Das gesamte Projekt wurde unter Beachtung von allgemein akzeptierten
+Konventionen initialisiert. Da keine externen Module genutzt werden, fallen
+Dinge wie requirements.txt oder setup.txt selbstverständlich raus.
+
 _Einhaltung von Naming conventions_
 
 _OOP_
@@ -44,3 +48,7 @@ _OOP_
 _Nutzung des abc - module_
 
 _Nutzung von Rekursion und klar definierten Funktionen_
+
+_Kommentare_
+
+
