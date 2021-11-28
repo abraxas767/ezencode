@@ -1,7 +1,4 @@
-from collections import OrderedDict
 from leaf_node import LeafNode
-import sys
-from queue import Queue 
 
 class Huffman:
 
