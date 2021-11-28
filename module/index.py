@@ -1,3 +1,4 @@
+#!/usr/local/bin/python3
 import sys
 sys.path.insert(0, "./encodings/huffman/")
 from huffman_encoding import HuffmanEncoding
