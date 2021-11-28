@@ -35,3 +35,12 @@ wieder dekomprimiert werden.
 
 ### Warum ist das hier meines Erachtens Clean Code?
 
+_Einhaltung von Struktur-Konventionen_
+
+_Einhaltung von Naming conventions_
+
+_OOP_
+
+_Nutzung des abc - module_
+
+_Nutzung von Rekursion und klar definierten Funktionen_
