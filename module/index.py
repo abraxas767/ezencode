@@ -4,20 +4,22 @@ from huffman_encoding import HuffmanEncoding
 sys.path.insert(0, "./encodings/morse/")
 from morse_encoding import MorseEncoding
 
-
-def ask():
+# get users encryption descision
+def ask() -> None:
     print("Do you want to use [confirm with ENTER]")
     print("> encryption Huffman (1)")
     print("> encryption Morse (2)")
     i = input()
     return int(i)
 
-def main()->None:
+def main() -> None:
+
     huffman = HuffmanEncoding()
     morse = MorseEncoding()
 
     i = 0 
     try:
+        # ask until input valid
         while i not in range(1,3):
             try:
                 i = ask()
@@ -31,7 +33,6 @@ def main()->None:
     except KeyboardInterrupt:
         print("\n")
         sys.exit()
-
     
     try:
         if i == 1:
@@ -49,4 +50,5 @@ def main()->None:
         sys.exit()
 
 if __name__ == "__main__":
+    # ENTRYPOINT
     main()

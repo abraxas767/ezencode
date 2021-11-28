@@ -5,15 +5,18 @@ from abstract_encoding import Encoding
 
 class HuffmanEncoding(Encoding):
     """ 
-        This is 
-
+        This is the implementation of the huffman encoding.
     """
 
     __leafs = [] 
     __prefix_table = {}
 
-    # comment
-    def encode(self, data: str):
+    # generate prefix table and encode accordingly 
+    def encode(self, data: str) -> str:
+        # TODO save the generated prefix table and 
+        # append it to the compressed result
+        if data == '':
+            raise ValueError('input cant be empty')
         self.__prefix_table = {}
         self.__leafs = []
         freq = self.__map_frequencies(data)
@@ -25,8 +28,13 @@ class HuffmanEncoding(Encoding):
         for char in data:
             res += self.__prefix_table[char]
         return res
+    
+    # receives input data and decodes with help of given prefix table
+    def decode(self, data: str) -> str:
+        # TODO Get the prefix table from input
+        # and decode accordingly
 
-    def decode(self, data: str):
+        # reverse the table to be able to access prefixes as keys
         reverse_table = {val: key for key, val in self.__prefix_table.items()} 
         res = ""
         tmp = ""
@@ -37,10 +45,12 @@ class HuffmanEncoding(Encoding):
                 tmp = ""
         return res
 
-    def __create_prefix_table(self):
+    # nudge recursive tree generation
+    def __create_prefix_table(self) -> None:
         self.__add_to_prefix_table(self.__leafs[0])
-
-    def __add_to_prefix_table(self, node):
+    
+    # generate prefix table entries recursivly
+    def __add_to_prefix_table(self, node: object) -> None:
         if not node.is_numeric:
             code = ""
             code += str(node.code)
@@ -53,10 +63,12 @@ class HuffmanEncoding(Encoding):
         if node.child0 is not None and node.child1 is not None:
             self.__add_to_prefix_table(node.child0)
             self.__add_to_prefix_table(node.child1)
-    
-    def __pair_frequencies(self, data: dict):
+   
+    # create leaf nodes
+    def __pair_frequencies(self, data: dict) -> None:
         # check if odd
         if len(data) % 2 != 0:
+            # create a fill node
             fill_node = LeafNode("xx", 0, False)
             self.__leafs.append(fill_node)
         for i in data.items():
@@ -64,7 +76,8 @@ class HuffmanEncoding(Encoding):
             self.__leafs.append(leaf_node)
         self.__gen_pairs(self.__leafs)
 
-    def __gen_pairs(self, data):
+    # recursive tree generation
+    def __gen_pairs(self, data: list) -> None:
         pairs = []
         while len(data) > 0:
             l1 = data[-1]
@@ -87,11 +100,13 @@ class HuffmanEncoding(Encoding):
             self.__leafs = pairs
             return 
         self.__gen_pairs(pairs)
-       
+    
+    # sort given frequencies alphabetically and according to probability 
     def __sort_frequencies(self, data: dict) -> dict:
         res = {k: v for k, v in sorted(data.items(), key=lambda item: (item[1], item[0]))}
         return res
 
+    # map characters to frequencies
     def __map_frequencies(self, data: str) -> dict:
         res = {i : data.count(i) for i in set(data)}
         return res
