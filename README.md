@@ -1,7 +1,15 @@
 # ezencode
-a simple compression tool
+_easy - encode_ 
 
-implemented algorithms:
+### Ein simples Datenkomprimierungs Projekt.
 
-- huffman encoding
-- morse
+Dieses Projekt implementiert bis jetzt zwei Arten von Codierung/Kompression:
+- Huffman Encoding (https://de.wikipedia.org/wiki/Huffman-Kodierung)
+- Morse (https://de.wikipedia.org/wiki/Morsecode)
+
+Zur Ausführung auf Unix basierten System:
+
+```bash I'm A tab
+cd ./ezencode/module
+python3 index.py
+```
