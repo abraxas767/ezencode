@@ -51,13 +51,10 @@ __name = "example"
 def __func_name():
     print("example")
 ```
-Final Variablen werden im UPPER_SNAKE_CASE gehalten:
+Konstante Variablen werden im UPPER_SNAKE_CASE gehalten:
 ```py
 FINALE_VARIABLE = 1
 ```
-
-
-_OOP_
 
 _Nutzung des abc - module_
 
