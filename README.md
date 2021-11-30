@@ -43,6 +43,13 @@ Dinge wie requirements.txt oder setup.txt selbstverständlich raus.
 
 _Einhaltung von Naming conventions_
 
+Wie in PEP 8, Python styleguide, vorgegeben ist, werden Filenames, Funktionen und Variablen 
+im snake_case gehalten.
+private Funktionen und Variablen werden in folgendem Format angegeben:
+```py
+__name = "example"
+```
+
 _OOP_
 
 _Nutzung des abc - module_
