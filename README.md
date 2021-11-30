@@ -58,7 +58,17 @@ FINALE_VARIABLE = 1
 
 _Nutzung des abc - module_
 
+Python bietet zwar von sich aus keine Möglichkeit abstrakte Klassen und Interfaces einzubinden,
+mit Hilfe des abc-modules ist das aber kein Problem. Dieses wurde hier verwendet um eine abstrakte
+Klasse "Encoding" einzuführen, welche mindestens die Methode "encode" und "decode" implementieren
+muss. 
+
 _Nutzung von Rekursion und klar definierten Funktionen_
+
+Um Redundanz im Code zu verhindern wurde in diesem Code an mehreren Stellen das Prinzip der Rekursion
+angewendet. Insbesondere wenn es darum geht den Huffman Tree zu erstellen.
+Desweiteren wurde versucht den Code so gut wie möglich aufzuteilen in prägnante Methoden mit klar 
+definierter Aufgabe.
 
 _Kommentare_
 
