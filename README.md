@@ -48,7 +48,14 @@ im snake_case gehalten.
 private Funktionen und Variablen werden in folgendem Format angegeben:
 ```py
 __name = "example"
+def __func_name():
+    print("example")
 ```
+Final Variablen werden im UPPER_SNAKE_CASE gehalten:
+```py
+FINALE_VARIABLE = 1
+```
+
 
 _OOP_
 
